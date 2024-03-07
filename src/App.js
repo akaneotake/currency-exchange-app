@@ -1,25 +1,15 @@
-import logo from './logo.svg';
+import React from 'react';
+// Routerいる？
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import Template from './Template';
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Template>
+      <h1>Test Test</h1>
+    </Template>
   );
-}
+};
 
 export default App;
