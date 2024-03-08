@@ -1,7 +1,16 @@
+import { IconContext } from 'react-icons';
+import { FaPlus } from "react-icons/fa";
+import { FaBalanceScale } from "react-icons/fa";
+
 const Navbar = () => {
   return (
-    <nav className="navbar">
-      <a className="navbar-brand href='#'">$HOW MUCH in...</a>
+    <nav className="navbar navbar-expand-lg">
+      <a className="navbar-brand href='#' mx-auto"><FaBalanceScale /> HOW MUCH in...</a>
+      <IconContext.Provider value={{ size: '20px' }}>
+        <button class="btn my-2 my-sm-0" href='#'>
+          <FaPlus />
+        </button>
+      </IconContext.Provider>
     </nav>
   );
 };
