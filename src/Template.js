@@ -4,10 +4,12 @@ import { FaBalanceScale } from "react-icons/fa";
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg">
-      <a className="navbar-brand href='#' mx-auto"><FaBalanceScale /> HOW MUCH in...</a>
+    <nav className="navbar navbar-expand-lg border-bottom shadow-sm">
+      <a className="navbar-brand mx-auto" href='#'>
+        <h2 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h2>
+      </a>
       <IconContext.Provider value={{ size: '20px' }}>
-        <button class="btn my-2 my-sm-0" href='#'>
+        <button className="btn me-2" href='#'>
           <FaPlus />
         </button>
       </IconContext.Provider>
