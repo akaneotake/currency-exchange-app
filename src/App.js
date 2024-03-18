@@ -1,6 +1,6 @@
 import React from 'react';
 // Routerいる？
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Template from './Template';
 import './App.css';
 
