@@ -12,24 +12,24 @@ class Home extends React.Component {
           Latest Update: <span></span>
         </h6>
 
-        <ul className='container'>
-          <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
-            <span className='col-2 currency-name'>EUR<GoTriangleDown /></span>
-            <input className='col-6' type='text' name='amount-of-money'></input>
-            <span className='col-1'><IoReorderTwoOutline /></span>
-            <span className='col-1'><FaRegTrashAlt /></span>
-          </li>
+        <ul className='container my-4'>
+        <li className='row currency my-2'>
+          <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
+          <span className='col-2 currency-name'>EUR<GoTriangleDown /></span>
+          <input className='col-6' type='text' name='amount-of-money'></input>
+          <span className='col-1'><IoReorderTwoOutline /></span>
+          <span className='col-1'><FaRegTrashAlt /></span>
+        </li>
 
-          <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
-            <span className='col-2 currency-name'>EUR<GoTriangleDown /></span>
-            <input className='col-6' type='text' name='amount-of-money'></input>
-            <span className='col-1'><IoReorderTwoOutline /></span>
-            <span className='col-1'><FaRegTrashAlt /></span>
-          </li>
+        <li className='row currency my-2'>
+          <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
+          <span className='col-2 currency-name'>EUR<GoTriangleDown /></span>
+          <input className='col-6' type='text' name='amount-of-money'></input>
+          <span className='col-1'><IoReorderTwoOutline /></span>
+          <span className='col-1'><FaRegTrashAlt /></span>
+        </li>
 
-        </ul>  
+    </ul>
 
       </div>
 
