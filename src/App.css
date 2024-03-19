@@ -5,3 +5,8 @@ li {
 p {
   margin-bottom: 0;
 }
+
+button {
+  border: none;
+  background-color: transparent;
+}
