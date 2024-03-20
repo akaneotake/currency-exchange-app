@@ -10,9 +10,9 @@ import { FaRegTrashAlt } from "react-icons/fa";
 const NavbarHome = () => {
   return (
     <nav className='navbar navbar-expand-lg border-bottom shadow-sm'>
-      <a className='navbar-brand mx-auto' href='#'>
+      <Link to='/' className='navbar-brand mx-auto'>
         <h2 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h2>
-      </a>
+      </Link>
       <IconContext.Provider value={{ size: '20px' }}>
         <Link to='/search' className='btn me-2'><FaPlus /></Link>
       </IconContext.Provider>
@@ -20,42 +20,42 @@ const NavbarHome = () => {
   );
 };
 
-
 class Home extends React.Component {
   render() {
     return (
       <div>
         <NavbarHome />
-        <div className='px-0'>
-          <h6 className='text-center py-2'>
-            Latest Update: <span></span>
-          </h6>
+        <h6 className='text-center py-2'>
+          Latest Update: <span></span>
+        </h6>
 
-          <ul className='container my-4'>
-            <li className='row currency my-2'>
-              <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
-              <span className='col-2 currency-name'>EUR<GoTriangleDown /></span>
-              <input className='col-6' type='text' name='amount-of-money'></input>
-              <span className='col-1'><IoReorderTwoOutline /></span>
-              <span className='col-1'><FaRegTrashAlt /></span>
-            </li>
+        <ul className='container my-4'>
+          <li className='row currency my-2'>
+            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
+            <div className='col-2 currency-name my-auto'>
+            <span className='short-name'>EUR</span>
+              <Link to='/search'><GoTriangleDown /></Link>
+            </div>
+            <input className='col-6' type='text' name='amount-of-money'></input>
+            <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
+            <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+          </li>
 
-            <li className='row currency my-2'>
-              <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
-              <span className='col-2 currency-name'>EUR<GoTriangleDown /></span>
-              <input className='col-6' type='text' name='amount-of-money'></input>
-              <span className='col-1'><IoReorderTwoOutline /></span>
-              <span className='col-1'><FaRegTrashAlt /></span>
-            </li>
+          <li className='row currency my-2'>
+            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
+            <div className='col-2 currency-name my-auto'>
+              <span className='short-name'>EUR</span>
+              <Link to='/search'><GoTriangleDown /></Link>
+            </div>
+            <input className='col-6' type='text' name='amount-of-money'></input>
+            <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
+            <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+          </li>
 
-          </ul>
-        </div>
+        </ul>
      </div>
     )
   }
 }
 
 export default Home;
-
-
-

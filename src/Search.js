@@ -5,19 +5,16 @@ import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
 import { FaPlus } from 'react-icons/fa';
 
-const Navbar = () => {
+const NavbarSearch = () => {
   return (
     <nav className='navbar navbar-expand-lg border-bottom shadow-sm'>
       <IconContext.Provider value={{ size: '20px' }} className='col-2'>
         <Link to='/' className='btn ms-2'><FaArrowLeft /></Link> 
       </IconContext.Provider>      
-      <div className='col-8'>
-        <input type='text' name='search' placeholder='Search Currency'></input>
+      <div className='col-10'>
+        <input type='text' name='search' placeholder='Search Currency' className='border-0'></input>
       </div>
-      <div className='col-2'></div>
     </nav>
-
-
   );
 };
 
@@ -46,12 +43,12 @@ class Search extends React.Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <NavbarSearch />
         <ul className='container my-4'>
           <li className='row my-2'>
             <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
             <div className='col-9 currency-name'>
-              <p className='fw-bold'>EUR</p>
+              <p className='short-name'>EUR</p>
               <p>Euro</p>
             </div>
             <button className='col-1 py-auto' value='eur' onClick={ this.addList }><FaPlus /></button>

@@ -1,10 +1,7 @@
 import React from 'react';
-
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import Search from './Search';
-
 import './App.css';
 
 const Footer = () => {
