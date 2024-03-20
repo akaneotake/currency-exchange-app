@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import { IconContext } from 'react-icons';
 import { FaPlus, FaBalanceScale } from 'react-icons/fa';
@@ -6,26 +7,25 @@ import { GoTriangleDown } from "react-icons/go";
 import { IoReorderTwoOutline } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const Navbar = () => {
+const NavbarHome = () => {
   return (
     <nav className='navbar navbar-expand-lg border-bottom shadow-sm'>
       <a className='navbar-brand mx-auto' href='#'>
         <h2 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h2>
       </a>
       <IconContext.Provider value={{ size: '20px' }}>
-        <button className='btn me-2' href='#'>
-          <FaPlus />
-        </button>
+        <Link to='/search' className='btn me-2'><FaPlus /></Link>
       </IconContext.Provider>
     </nav>
   );
 };
 
+
 class Home extends React.Component {
   render() {
     return (
       <div>
-        <Navbar />
+        <NavbarHome />
         <div className='px-0'>
           <h6 className='text-center py-2'>
             Latest Update: <span></span>
@@ -49,7 +49,6 @@ class Home extends React.Component {
             </li>
 
           </ul>
-
         </div>
      </div>
     )
