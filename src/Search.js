@@ -1,4 +1,6 @@
 import React from 'react';
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import Home from './Home';
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
@@ -7,13 +9,21 @@ import { FaPlus } from 'react-icons/fa';
 const Navbar = () => {
   return (
     <nav className='navbar navbar-expand-lg border-bottom shadow-sm'>
-      <IconContext.Provider value={{ size: '20px' }}>
-        <button className='btn me-2' href='#'>
-        <FaArrowLeft />
-        </button>
-      </IconContext.Provider>
+      <Router>
+        <IconContext.Provider value={{ size: '20px' }}>
+          <Link to='/' className='btn ms-2'><FaArrowLeft /></Link> 
+        </IconContext.Provider>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
+      
       <input type='text' name='search' placeholder='Search Currency'></input>
     </nav>
+
+
   );
 };
 
