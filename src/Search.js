@@ -24,20 +24,24 @@ class Search extends React.Component {
     // false = not in the list
     // true = in the list already
     this.state = {
-      eur: false,
+      list: [],
     };
     this.addList = this.addList.bind(this);
   }
 
   // ここやってます
+  // stateのlist配列にボタンイベントのvalue(eur)追加成功、これをどうやってHomeに移すか？
   // ボタンクリックイベントの判定ゆるい？
   addList = (event)=> {
-    this.setState({ [event.target.value]: true });
-    console.log(this.state.eur);
-  }
+    let lists = this.state.list;
+    let language = event.target.value;
 
-  componentDidUpdate(){
-    console.log(this.state.eur)
+    if (lists.indexOf(language) === -1) {
+      this.setState({ list: [...lists, language] });
+      console.log(lists);
+    } else {
+      return ;
+    };
   }
 
   render() {
@@ -46,8 +50,9 @@ class Search extends React.Component {
         <NavbarSearch />
         <ul className='container my-4'>
           <li className='row my-2'>
+            <input type='checkbox' value='eur' className='checkbox col-1'></input>
             <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
-            <div className='col-9 currency-name'>
+            <div className='col-8 currency-name'>
               <p className='short-name'>EUR</p>
               <p>Euro</p>
             </div>
