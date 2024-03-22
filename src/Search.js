@@ -24,7 +24,7 @@ class Search extends React.Component {
     // false = not in the list
     // true = in the list already
     this.state = {
-      list: [],
+      lists: [],
     };
     this.addList = this.addList.bind(this);
   }
@@ -33,12 +33,12 @@ class Search extends React.Component {
   // stateのlist配列にボタンイベントのvalue(eur)追加成功、これをどうやってHomeに移すか？
   // ボタンクリックイベントの判定ゆるい？
   addList = (event)=> {
-    let lists = this.state.list;
-    let language = event.target.value;
+    const lists = this.state.lists;
+    const language = event.target.value;
+    panda = [...lists, language];
 
     if (lists.indexOf(language) === -1) {
-      this.setState({ list: [...lists, language] });
-      console.log(lists);
+      this.setState({ lists: [...lists, language] });
     } else {
       return ;
     };
