@@ -21,6 +21,36 @@ const NavbarHome = () => {
 };
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: [],
+      baseLanguage: '',
+    }
+
+    this.handleFocus = this.handleFocus.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleFocus = (event) => {
+    this.setState({ baseLanguage: event.target.name });
+  }
+
+  handleChange = () => {
+    let { baseLanguage }= this.state;
+    fetch(`https://api.frankfurter.app/latest?from=${baseLanguage}`)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error('Request was either a 404 or 500');
+      }).then(data => {
+        console.log('Result in JSON: ', data);
+        let results = JSON.stringify(data);
+        this.setState({results: results});
+      }).catch(error => console.log('Error!', error));
+  }
+
   render() {
     return (
       <div>
@@ -29,29 +59,28 @@ class Home extends React.Component {
           Latest Update: <span></span>
         </h6>
 
-        <ul className='container my-4'>
+        <ul className='container my-4 currency-list'>
           <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
+            <img className='col-2 flag' src='./images/eur.png' alt='Euro'></img>
             <div className='col-2 currency-name my-auto'>
             <span className='short-name'>EUR</span>
               <Link to='/search'><GoTriangleDown /></Link>
             </div>
-            <input className='col-6' type='text' name='amount-of-money'></input>
-            <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
-            <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+            <input className='col-6 amount' type='number' name='EUR' onFocus={ this.handleFocus } onChange={ this.handleChange }></input>
+            <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
+            <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
           </li>
 
           <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
+            <img className='col-2 flag' src='./images/usd.png' alt='United States Dollar'></img>
             <div className='col-2 currency-name my-auto'>
-              <span className='short-name'>EUR</span>
+            <span className='short-name'>USD</span>
               <Link to='/search'><GoTriangleDown /></Link>
             </div>
-            <input className='col-6' type='text' name='amount-of-money'></input>
-            <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
-            <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+            <input className='col-6 amount' type='number' name='USD' onFocus={ this.handleFocus } onChange={ this.handleChange }></input>
+            <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
+            <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
           </li>
-
         </ul>
      </div>
     )
