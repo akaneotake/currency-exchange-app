@@ -62,6 +62,7 @@ class Home extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -74,42 +75,20 @@ class Home extends React.Component {
   }
 
   handleInput= (event)=> {
-    this.setState({
-      amount: event.target.value,
-      AUD: '',
-      BGN: '',
-      BRL: '',
-      CAD: '',
-      CHF: '',
-      CNY: '',
-      CZK: '',
-      DKK: '',
-      EUR: '',
-      GBP: '',
-      HKD: '',
-      HUF: '',
-      IDR: '',
-      ILS: '',
-      INR: '',
-      ISK: '',
-      JPY: '',
-      KRW: '',
-      MXN: '',
-      MYR: '',
-      NOK: '',
-      NZD: '',
-      PHP: '',
-      PLN: '',
-      RON: '',
-      RUB: '',
-      SEK: '',
-      SGD: '',
-      THB: '',
-      TRY: '',
-      USD: '',
-      ZAR: '',
-    });
-    
+    const input= event.target.value;
+
+    if (input.match(/[0-9/.]+/g) != input) {
+      this.setState({
+        amount: '',
+      })
+    } else {
+      this.setState({
+        amount: [input],
+      })
+    };
+  }
+
+  handleChange= ()=> {
     const { base }= this.state;
     const { amount }= this.state;
 
@@ -167,7 +146,7 @@ class Home extends React.Component {
   }
 
   render() {
-    const { amount, EUR, USD }= this.state;
+    const { EUR, USD }= this.state;
 
     return (      
       <div>
@@ -184,20 +163,20 @@ class Home extends React.Component {
               <Link to='/search'><GoTriangleDown /></Link>
             </div>
             <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
-              <input id='EUR' className='input h-100 w-100' type='number' name='EUR' value={ EUR } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+              <input className='input h-100 w-100' type='text' name='EUR' value={ EUR } onClick={ this.handleClick } onInput={ this.handleInput } onChange={ this.handleChange }></input>
             </form>
             <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
             <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
           </li>
 
           <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/usd.png' alt='USDでーーーす'></img>
+            <img className='col-2 flag' src='./images/usd.png' alt='United States Dollar'></img>
             <div className='col-2 currency-name my-auto'>
             <span className='short-name'>EUR</span>
               <Link to='/search'><GoTriangleDown /></Link>
             </div>
             <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
-              <input id='USD' className='input h-100 w-100' type='number' name='USD' value={ USD } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+              <input className='input h-100 w-100' type='text' name='USD' value={ USD } onClick={ this.handleClick } onInput={ this.handleInput } onChange={ this.handleChange }></input>
             </form>
             <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
             <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
