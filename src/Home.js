@@ -80,7 +80,7 @@ class Home extends React.Component {
     if (input.match(/[0-9/.]+/g) != input) {
       this.setState({
         amount: '',
-      })
+      });
     } else {
       this.setState({
         amount: [input],

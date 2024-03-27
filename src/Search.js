@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
-import { FaPlus } from 'react-icons/fa';
 
 const NavbarSearch = () => {
   return (
@@ -26,37 +25,50 @@ class Search extends React.Component {
     this.state = {
       lists: [],
     };
-    this.addList = this.addList.bind(this);
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   // ここやってます
   // stateのlist配列にボタンイベントのvalue(eur)追加成功、これをどうやってHomeに移すか？
-  // ボタンクリックイベントの判定ゆるい？
-  addList = (event)=> {
-    const lists = this.state.lists;
+  handleClick = (event)=> {
+    const { lists }= this.state;
     const language = event.target.value;
-    panda = [...lists, language];
-
+    
     if (lists.indexOf(language) === -1) {
-      this.setState({ lists: [...lists, language] });
+      this.setState({
+        lists: [...lists, language],
+      });
     } else {
-      return ;
+      this.setState({
+        lists: lists.filter((item, index) => (item != language)),
+      });
     };
   }
 
   render() {
+    console.log(this.state.lists);
+
     return (
       <div>
         <NavbarSearch />
         <ul className='container my-4'>
           <li className='row my-2'>
-            <input type='checkbox' value='eur' className='checkbox col-1'></input>
-            <img className='col-2 flag' src='./images/eur.png' alt='euro'></img>
-            <div className='col-8 currency-name'>
+            <input className='checkbox col-1' type='checkbox' value='EUR' onClick={ this.handleClick }></input>
+            <img className='col-2 flag' src='./images/eur.png' alt='Euro'></img>
+            <div className='col-9 currency-name'>
               <p className='short-name'>EUR</p>
               <p>Euro</p>
             </div>
-            <button className='col-1 py-auto' value='eur' onClick={ this.addList }><FaPlus /></button>
+          </li>
+
+          <li className='row my-2'>
+            <input className='checkbox col-1' type='checkbox' value='USD' onClick={ this.handleClick }></input>
+            <img className='col-2 flag' src='./images/usd.png' alt='United States Dollar'></img>
+            <div className='col-9 currency-name'>
+              <p className='short-name'>USD</p>
+              <p>United States Dollar</p>
+            </div>
           </li>
 
         </ul>  
