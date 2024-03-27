@@ -24,35 +24,152 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      results: [],
-      baseLanguage: '',
+      base: '',
+      amount: '',
+      AUD: '',
+      BGN: '',
+      BRL: '',
+      CAD: '',
+      CHF: '',
+      CNY: '',
+      CZK: '',
+      DKK: '',
+      EUR: '',
+      GBP: '',
+      HKD: '',
+      HUF: '',
+      IDR: '',
+      ILS: '',
+      INR: '',
+      ISK: '',
+      JPY: '',
+      KRW: '',
+      MXN: '',
+      MYR: '',
+      NOK: '',
+      NZD: '',
+      PHP: '',
+      PLN: '',
+      RON: '',
+      RUB: '',
+      SEK: '',
+      SGD: '',
+      THB: '',
+      TRY: '',
+      USD: '',
+      ZAR: '',
     }
 
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleFocus = (event) => {
-    this.setState({ baseLanguage: event.target.name });
+  handleClick= (event)=> {
+    this.setState({
+      base: event.target.name,
+    });
+    // ↓　後で消す　↓
+    console.log('Base Language: ', this.state.base);
   }
 
-  handleChange = () => {
-    let { baseLanguage }= this.state;
-    fetch(`https://api.frankfurter.app/latest?from=${baseLanguage}`)
+  handleInput= (event)=> {
+    this.setState({
+      amount: event.target.value,
+      AUD: '',
+      BGN: '',
+      BRL: '',
+      CAD: '',
+      CHF: '',
+      CNY: '',
+      CZK: '',
+      DKK: '',
+      EUR: '',
+      GBP: '',
+      HKD: '',
+      HUF: '',
+      IDR: '',
+      ILS: '',
+      INR: '',
+      ISK: '',
+      JPY: '',
+      KRW: '',
+      MXN: '',
+      MYR: '',
+      NOK: '',
+      NZD: '',
+      PHP: '',
+      PLN: '',
+      RON: '',
+      RUB: '',
+      SEK: '',
+      SGD: '',
+      THB: '',
+      TRY: '',
+      USD: '',
+      ZAR: '',
+    });
+    
+    const { base }= this.state;
+    const { amount }= this.state;
+
+    fetch(`https://api.frankfurter.app/latest?from=${ base }`)
       .then(response => {
         if (response.ok) {
           return response.json();
         }
         throw new Error('Request was either a 404 or 500');
       }).then(data => {
-        console.log('Result in JSON: ', data);
-        let results = JSON.stringify(data);
-        this.setState({results: results});
-      }).catch(error => console.log('Error!', error));
+        // ↓　後で消す　↓
+        console.log('Result: ', data);
+
+        this.setState({
+          AUD: amount * data.rates.AUD,
+          BGN: amount * data.rates.BGN,
+          BRL: amount * data.rates.BRL,
+          CAD: amount * data.rates.CAD,
+          CHF: amount * data.rates.CHF,
+          CNY: amount * data.rates.CNY,
+          CZK: amount * data.rates.CZK,
+          DKK: amount * data.rates.DKK,
+          EUR: amount * data.rates.EUR,
+          GBP: amount * data.rates.GBP,
+          HKD: amount * data.rates.HKD,
+          HUF: amount * data.rates.HUF,
+          IDR: amount * data.rates.IDR,
+          ILS: amount * data.rates.ILS,
+          INR: amount * data.rates.INR,
+          ISK: amount * data.rates.ISK,
+          JPY: amount * data.rates.JPY,
+          KRW: amount * data.rates.KRW,
+          MXN: amount * data.rates.MXN,
+          MYR: amount * data.rates.MYR,
+          NOK: amount * data.rates.NOK,
+          NZD: amount * data.rates.NZD,
+          PHP: amount * data.rates.PHP,
+          PLN: amount * data.rates.PLN,
+          RON: amount * data.rates.RON,
+          RUB: amount * data.rates.RUB,
+          SEK: amount * data.rates.SEK,
+          SGD: amount * data.rates.SGD,
+          THB: amount * data.rates.THB,
+          TRY: amount * data.rates.TRY,
+          USD: amount * data.rates.USD,
+          ZAR: amount * data.rates.ZAR,
+          // ここダブルだけど平気？
+          [base]: [amount],
+        });
+      }).catch(error => console.log('Error!: ', error));
+  }
+
+  handleSubmit= (event)=> {
+    event.preventDefault();
   }
 
   render() {
-    return (
+    const { amount, EUR, USD }= this.state;
+
+    return (      
       <div>
         <NavbarHome />
         <h6 className='text-center py-2'>
@@ -66,18 +183,22 @@ class Home extends React.Component {
             <span className='short-name'>EUR</span>
               <Link to='/search'><GoTriangleDown /></Link>
             </div>
-            <input className='col-6 amount' type='number' name='EUR' onFocus={ this.handleFocus } onChange={ this.handleChange }></input>
+            <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
+              <input id='EUR' className='input h-100 w-100' type='number' name='EUR' value={ EUR } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+            </form>
             <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
             <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
           </li>
 
           <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/usd.png' alt='United States Dollar'></img>
+            <img className='col-2 flag' src='./images/usd.png' alt='USDでーーーす'></img>
             <div className='col-2 currency-name my-auto'>
-            <span className='short-name'>USD</span>
+            <span className='short-name'>EUR</span>
               <Link to='/search'><GoTriangleDown /></Link>
             </div>
-            <input className='col-6 amount' type='number' name='USD' onFocus={ this.handleFocus } onChange={ this.handleChange }></input>
+            <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
+              <input id='USD' className='input h-100 w-100' type='number' name='USD' value={ USD } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+            </form>
             <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
             <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
           </li>
