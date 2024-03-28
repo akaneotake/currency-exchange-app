@@ -7,15 +7,19 @@ import { GoTriangleDown } from "react-icons/go";
 import { IoReorderTwoOutline } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const NavbarHome = () => {
+const NavbarHome= () => {
   return (
-    <nav className='navbar navbar-expand-lg border-bottom shadow-sm'>
-      <Link to='/' className='navbar-brand mx-auto'>
-        <h2 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h2>
-      </Link>
-      <IconContext.Provider value={{ size: '20px' }}>
-        <Link to='/search' className='btn me-2'><FaPlus /></Link>
-      </IconContext.Provider>
+    <nav className='navbar border-bottom shadow-sm'>
+      <div class="container-fluid">
+        <Link to='/' className='navbar-brand mx-auto'>
+          <h5 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h5>
+        </Link>
+        <IconContext.Provider value={{ size: '20px' }}>
+          <Link to='/search'>
+            <button className='btn'><FaPlus /></button>
+          </Link>
+        </IconContext.Provider>
+      </div>
     </nav>
   );
 };

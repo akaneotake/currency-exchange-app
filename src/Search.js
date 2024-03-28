@@ -6,12 +6,16 @@ import { FaArrowLeft } from "react-icons/fa";
 
 const NavbarSearch = () => {
   return (
-    <nav className='navbar navbar-expand-lg border-bottom shadow-sm'>
-      <IconContext.Provider value={{ size: '20px' }} className='col-2'>
-        <Link to='/' className='btn ms-2'><FaArrowLeft /></Link> 
-      </IconContext.Provider>      
-      <div className='col-10'>
-        <input type='text' name='search' placeholder='Search Currency' className='border-0'></input>
+    <nav className='navbar border-bottom shadow-sm'>
+      <div className="container-fluid">
+        <IconContext.Provider value={{ size: '20px' }} className='col-2'>
+          <Link to='/'>
+            <button className='btn'><FaArrowLeft /></button>
+          </Link> 
+        </IconContext.Provider> 
+        <div className='col-10'>     
+          <input type='search' placeholder='Search Currency' aria-label='Search' className='form-control border-0'></input>
+        </div>
       </div>
     </nav>
   );
@@ -20,8 +24,6 @@ const NavbarSearch = () => {
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    // false = not in the list
-    // true = in the list already
     this.state = {
       lists: [],
     };
@@ -47,6 +49,7 @@ class Search extends React.Component {
   }
 
   render() {
+    // ↓　後で消す　↓
     console.log(this.state.lists);
 
     return (
