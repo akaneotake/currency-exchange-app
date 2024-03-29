@@ -47,8 +47,8 @@ class Currency extends React.Component {
           <span className='short-name'>{ shortName }</span>
           <Link to='/search'><GoTriangleDown /></Link>
         </div>
-        <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
-          <input className='input h-100 w-100' type='text' name={ shortName } defaultValue={ value } onClick={ click } onInput={ input } onChange={ change }></input>
+        <form className='col-6 p-0' autocomplete="off" onSubmit={ this.handleSubmit }>
+          <input className='input h-100 w-100' type='number' step='0.1' name={ shortName } defaultValue={ value } onClick={ click } onInput={ input } onChange={ change }></input>
         </form>
         <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
         <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
@@ -98,7 +98,6 @@ class Home extends React.Component {
       ZAR: '',
     }
     this.handleClick = this.handleClick.bind(this);
-    this.handleInput = this.handleInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -111,17 +110,11 @@ class Home extends React.Component {
   }
 
   handleInput= (event)=> {
-    const input= event.target.value;
-
-    if (input.match(/[0-9/.]+/g) != input) {
-      this.setState({
-        amount: '',
-      });
-    } else {
-      this.setState({
-        amount: [input],
-      })
-    };
+    this.setState({
+      amount: event.target.value,
+    })
+    
+    // ↓　後で消す　↓
     console.log('インプット');
   }
 
