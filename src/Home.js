@@ -30,7 +30,6 @@ class Currency extends React.Component {
     this.state = {
     }
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   handleSubmit= (event)=> {
@@ -41,16 +40,21 @@ class Currency extends React.Component {
     const { shortName, longName, src, value, click, input, change }= this.props;
 
     return (
-      <li className='row my-2'>
-        <img className='col-2 flag' src={ src } alt={ longName }></img>
-        <div className='col-2 my-auto'>
+      <li className='row my-1 px-2'>
+      
+        <img className='col-2 flag p-0' src={ src } alt={ longName }></img>
+
+        <div className='col-2 my-auto p-0 text-center'>
           <span className='short-name'>{ shortName }</span>
           <Link to='/search'><GoTriangleDown /></Link>
         </div>
-        <form className='col-6 p-0' autocomplete="off" onSubmit={ this.handleSubmit }>
-          <input className='input h-100 w-100' type='number' step='0.1' name={ shortName } defaultValue={ value } onClick={ click } onInput={ input } onChange={ change }></input>
+
+        <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
+          <input className='input h-100 w-100 text-end border-0' type='number' step='0.1' name={ shortName } defaultValue={ value } onClick={ click } onInput={ input } onChange={ change }></input>
         </form>
-        <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
+        
+        <button type='button' className='btn col-1 m-auto'><IoReorderTwoOutline /></button>
+        
         <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
       </li>
     );
@@ -62,8 +66,8 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      date: '',
       base: '',
-      amount: '',
       AUD: '',
       BGN: '',
       BRL: '',
@@ -98,7 +102,7 @@ class Home extends React.Component {
       ZAR: '',
     }
     this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleInput = this.handleInput.bind(this);
   }
 
   handleClick= (event)=> {
@@ -110,79 +114,69 @@ class Home extends React.Component {
   }
 
   handleInput= (event)=> {
-    this.setState({
-      amount: event.target.value,
-    })
-    
-    // ↓　後で消す　↓
-    console.log('インプット');
-  }
-
-  handleChange= ()=> {
     const { base }= this.state;
-    const { amount }= this.state;
+    const amount= event.target.value;
 
     fetch(`https://api.frankfurter.app/latest?from=${ base }`)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error('Request was either a 404 or 500');
-      }).then(data => {
-        // ↓　後で消す　↓
-        console.log('Result: ', data);
-
-        this.setState({
-          AUD: amount * data.rates.AUD,
-          BGN: amount * data.rates.BGN,
-          BRL: amount * data.rates.BRL,
-          CAD: amount * data.rates.CAD,
-          CHF: amount * data.rates.CHF,
-          CNY: amount * data.rates.CNY,
-          CZK: amount * data.rates.CZK,
-          DKK: amount * data.rates.DKK,
-          EUR: amount * data.rates.EUR,
-          GBP: amount * data.rates.GBP,
-          HKD: amount * data.rates.HKD,
-          HUF: amount * data.rates.HUF,
-          IDR: amount * data.rates.IDR,
-          ILS: amount * data.rates.ILS,
-          INR: amount * data.rates.INR,
-          ISK: amount * data.rates.ISK,
-          JPY: amount * data.rates.JPY,
-          KRW: amount * data.rates.KRW,
-          MXN: amount * data.rates.MXN,
-          MYR: amount * data.rates.MYR,
-          NOK: amount * data.rates.NOK,
-          NZD: amount * data.rates.NZD,
-          PHP: amount * data.rates.PHP,
-          PLN: amount * data.rates.PLN,
-          RON: amount * data.rates.RON,
-          RUB: amount * data.rates.RUB,
-          SEK: amount * data.rates.SEK,
-          SGD: amount * data.rates.SGD,
-          THB: amount * data.rates.THB,
-          TRY: amount * data.rates.TRY,
-          USD: amount * data.rates.USD,
-          ZAR: amount * data.rates.ZAR,
-          // ここダブルだけど平気？
-          [base]: [amount],
-        });
-      }).catch(error => console.log('Error!: ', error));
-  }
-
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Request was either a 404 or 500');
+    }).then(data => {
+      // ↓　後で消す　↓
+      console.log('Result: ', data);
+      this.setState({
+        date: data.date,
+        AUD: amount * data.rates.AUD,
+        BGN: amount * data.rates.BGN,
+        BRL: amount * data.rates.BRL,
+        CAD: amount * data.rates.CAD,
+        CHF: amount * data.rates.CHF,
+        CNY: amount * data.rates.CNY,
+        CZK: amount * data.rates.CZK,
+        DKK: amount * data.rates.DKK,
+        EUR: amount * data.rates.EUR,
+        GBP: amount * data.rates.GBP,
+        HKD: amount * data.rates.HKD,
+        HUF: amount * data.rates.HUF,
+        IDR: amount * data.rates.IDR,
+        ILS: amount * data.rates.ILS,
+        INR: amount * data.rates.INR,
+        ISK: amount * data.rates.ISK,
+        JPY: amount * data.rates.JPY,
+        KRW: amount * data.rates.KRW,
+        MXN: amount * data.rates.MXN,
+        MYR: amount * data.rates.MYR,
+        NOK: amount * data.rates.NOK,
+        NZD: amount * data.rates.NZD,
+        PHP: amount * data.rates.PHP,
+        PLN: amount * data.rates.PLN,
+        RON: amount * data.rates.RON,
+        RUB: amount * data.rates.RUB,
+        SEK: amount * data.rates.SEK,
+        SGD: amount * data.rates.SGD,
+        THB: amount * data.rates.THB,
+        TRY: amount * data.rates.TRY,
+        USD: amount * data.rates.USD,
+        ZAR: amount * data.rates.ZAR,
+        [base]: [amount],
+      });
+    }).catch(error => console.log('Error!: ', error))
+  };
+    
   render() {
-    const { EUR, USD, JPY }= this.state;
+    const { date, EUR, USD, JPY }= this.state;
 
     return (      
       <div>
         <NavbarHome />
         <div className='container'>
 
-          <h6 className='text-center py-2'>
-            Latest Update: <span></span>
+          <h6 className='text-center my-2'>
+            Latest Update: { date }
           </h6>
-          <ul className='my-4 currency-list'>
+          <ul className='my-4 p-0'>
 
             <Currency shortName='EUR' longName='Euro' src='./images/eur.png' value={ EUR } click={ this.handleClick } input={ this.handleInput } change={ this.handleChange } />
 

@@ -12,7 +12,8 @@ button {
 }
 
 .flag {
-  height: auto;
+  height: 38px;
+  width: auto;
 }
 
 .short-name {
