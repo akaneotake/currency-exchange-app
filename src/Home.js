@@ -7,10 +7,10 @@ import { GoTriangleDown } from "react-icons/go";
 import { IoReorderTwoOutline } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
 
-const NavbarHome= () => {
+const NavbarHome= ()=> {
   return (
     <nav className='navbar border-bottom shadow-sm'>
-      <div class="container-fluid">
+      <div className="container-fluid">
         <Link to='/' className='navbar-brand mx-auto'>
           <h5 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h5>
         </Link>
@@ -24,6 +24,40 @@ const NavbarHome= () => {
   );
 };
 
+class Currency extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+
+  }
+
+  handleSubmit= (event)=> {
+    event.preventDefault();
+  }
+
+  render() {    
+    const { shortName, longName, src, value, click, input, change }= this.props;
+
+    return (
+      <li className='row my-2'>
+        <img className='col-2 flag' src={ src } alt={ longName }></img>
+        <div className='col-2 my-auto'>
+          <span className='short-name'>{ shortName }</span>
+          <Link to='/search'><GoTriangleDown /></Link>
+        </div>
+        <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
+          <input className='input h-100 w-100' type='text' name={ shortName } defaultValue={ value } onClick={ click } onInput={ input } onChange={ change }></input>
+        </form>
+        <div className='col-1 m-auto'><IoReorderTwoOutline /></div>
+        <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+      </li>
+    );
+  }
+}
+   
+// input入力ラグすぎ、どうする？？？
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -63,11 +97,9 @@ class Home extends React.Component {
       USD: '',
       ZAR: '',
     }
-
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleClick= (event)=> {
@@ -90,6 +122,7 @@ class Home extends React.Component {
         amount: [input],
       })
     };
+    console.log('インプット');
   }
 
   handleChange= ()=> {
@@ -145,49 +178,29 @@ class Home extends React.Component {
       }).catch(error => console.log('Error!: ', error));
   }
 
-  handleSubmit= (event)=> {
-    event.preventDefault();
-  }
-
   render() {
-    const { EUR, USD }= this.state;
+    const { EUR, USD, JPY }= this.state;
 
     return (      
       <div>
         <NavbarHome />
-        <h6 className='text-center py-2'>
-          Latest Update: <span></span>
-        </h6>
+        <div className='container'>
 
-        <ul className='container my-4 currency-list'>
-          <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/eur.png' alt='Euro'></img>
-            <div className='col-2 currency-name my-auto'>
-            <span className='short-name'>EUR</span>
-              <Link to='/search'><GoTriangleDown /></Link>
-            </div>
-            <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
-              <input className='input h-100 w-100' type='text' name='EUR' value={ EUR } onClick={ this.handleClick } onInput={ this.handleInput } onChange={ this.handleChange }></input>
-            </form>
-            <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
-            <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
-          </li>
+          <h6 className='text-center py-2'>
+            Latest Update: <span></span>
+          </h6>
+          <ul className='my-4 currency-list'>
 
-          <li className='row currency my-2'>
-            <img className='col-2 flag' src='./images/usd.png' alt='United States Dollar'></img>
-            <div className='col-2 currency-name my-auto'>
-            <span className='short-name'>EUR</span>
-              <Link to='/search'><GoTriangleDown /></Link>
-            </div>
-            <form className='col-6 p-0' onSubmit={ this.handleSubmit }>
-              <input className='input h-100 w-100' type='text' name='USD' value={ USD } onClick={ this.handleClick } onInput={ this.handleInput } onChange={ this.handleChange }></input>
-            </form>
-            <div className='col-1 m-auto move'><IoReorderTwoOutline /></div>
-            <button type='button' className='btn col-1 delete'><FaRegTrashAlt /></button>
-          </li>
-        </ul>
+            <Currency shortName='EUR' longName='Euro' src='./images/eur.png' value={ EUR } click={ this.handleClick } input={ this.handleInput } change={ this.handleChange } />
+
+            <Currency shortName='USD' longName='United States Dollar' src='./images/usd.png' value={ USD } click={ this.handleClick } input={ this.handleInput } change={ this.handleChange } />
+
+            <Currency shortName='JPY' longName='Japan' src='./images/jpy.png' value={ JPY } click={ this.handleClick } input={ this.handleInput } change={ this.handleChange } />
+
+          </ul>
+        </div>
      </div>
-    )
+    );
   }
 }
 

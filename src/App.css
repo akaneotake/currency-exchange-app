@@ -11,6 +11,10 @@ button {
   background-color: transparent;
 }
 
+.flag {
+  height: auto;
+}
+
 .short-name {
   font-weight: bold;
 }
