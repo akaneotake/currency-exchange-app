@@ -24,12 +24,11 @@ const NavbarHome= ()=> {
   );
 };
 
-// componentDidMountでアップデート日時表示させる？？
 class Currency extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-    }
+    this.state = {}
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -40,7 +39,6 @@ class Currency extends React.Component {
   render() {    
     const { shortName, longName, src, amount, rate, click, input }= this.props;
     const value= amount * rate;
-    console.log(amount, rate);
 
     return (
       <li className='row my-1 px-2'>
@@ -64,13 +62,15 @@ class Currency extends React.Component {
   }
 }
    
+// componentDidMountでアップデート日時表示させる？？
+// 最初に表示される0なくしたい→amount: undefinedだとなるけどこれで大丈夫？？
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       date: '',
       base: '',
-      amount: '',
+      amount: undefined,
       AUD: '',
       BGN: '',
       BRL: '',
@@ -108,11 +108,10 @@ class Home extends React.Component {
     this.handleInput = this.handleInput.bind(this);
   }
 
-  // 最初に表示される0なくしたい
   handleClick= (event)=> {
     this.setState({
       base: event.target.name,
-      amount: '',
+      amount: undefined,
       AUD: '',
       BGN: '',
       BRL: '',
@@ -146,9 +145,9 @@ class Home extends React.Component {
       USD: '',
       ZAR: '',
     });
+
     // ↓　後で消す　↓
     console.log('Base Language: ', this.state.base);
-
   }
 
   // input毎にリクエストはやりすぎか？？
@@ -168,38 +167,38 @@ class Home extends React.Component {
       this.setState({
         date: data.date,
         amount: [amount],
-        AUD: amount * data.rates.AUD,
-        BGN: amount * data.rates.BGN,
-        BRL: amount * data.rates.BRL,
-        CAD: amount * data.rates.CAD,
-        CHF: amount * data.rates.CHF,
-        CNY: amount * data.rates.CNY,
-        CZK: amount * data.rates.CZK,
-        DKK: amount * data.rates.DKK,
+        AUD: data.rates.AUD,
+        BGN: data.rates.BGN,
+        BRL: data.rates.BRL,
+        CAD: data.rates.CAD,
+        CHF: data.rates.CHF,
+        CNY: data.rates.CNY,
+        CZK: data.rates.CZK,
+        DKK: data.rates.DKK,
         EUR: data.rates.EUR,
-        GBP: amount * data.rates.GBP,
-        HKD: amount * data.rates.HKD,
-        HUF: amount * data.rates.HUF,
-        IDR: amount * data.rates.IDR,
-        ILS: amount * data.rates.ILS,
-        INR: amount * data.rates.INR,
-        ISK: amount * data.rates.ISK,
+        GBP: data.rates.GBP,
+        HKD: data.rates.HKD,
+        HUF: data.rates.HUF,
+        IDR: data.rates.IDR,
+        ILS: data.rates.ILS,
+        INR: data.rates.INR,
+        ISK: data.rates.ISK,
         JPY: data.rates.JPY,
-        KRW: amount * data.rates.KRW,
-        MXN: amount * data.rates.MXN,
-        MYR: amount * data.rates.MYR,
-        NOK: amount * data.rates.NOK,
-        NZD: amount * data.rates.NZD,
-        PHP: amount * data.rates.PHP,
-        PLN: amount * data.rates.PLN,
-        RON: amount * data.rates.RON,
-        RUB: amount * data.rates.RUB,
-        SEK: amount * data.rates.SEK,
-        SGD: amount * data.rates.SGD,
-        THB: amount * data.rates.THB,
-        TRY: amount * data.rates.TRY,
+        KRW: data.rates.KRW,
+        MXN: data.rates.MXN,
+        MYR: data.rates.MYR,
+        NOK: data.rates.NOK,
+        NZD: data.rates.NZD,
+        PHP: data.rates.PHP,
+        PLN: data.rates.PLN,
+        RON: data.rates.RON,
+        RUB: data.rates.RUB,
+        SEK: data.rates.SEK,
+        SGD: data.rates.SGD,
+        THB: data.rates.THB,
+        TRY: data.rates.TRY,
         USD: data.rates.USD,
-        ZAR: amount * data.rates.ZAR,
+        ZAR: data.rates.ZAR,
         // ここダブルだけど大丈夫そ？？
         [base]: 1,
       });
@@ -207,7 +206,7 @@ class Home extends React.Component {
   };
     
   render() {
-    const { date, amount, EUR, USD, JPY }= this.state;
+    const { date, amount, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, ILS, INR, ISK, JPY, KRW, MXN, MYR, NOK, NZD, PHP, PLN, RON, RUB, SEK, SGD, THB, TRY, USD, ZAR }= this.state;
 
     return (      
       <div>
