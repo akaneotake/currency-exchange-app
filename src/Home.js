@@ -62,7 +62,6 @@ class Currency extends React.Component {
   }
 }
    
-// componentDidMountでアップデート日時表示させる？？
 // 最初に表示される0なくしたい→amount: undefinedだとなるけどこれで大丈夫？？
 class Home extends React.Component {
   constructor(props) {
@@ -106,6 +105,20 @@ class Home extends React.Component {
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
+  }
+
+  componentDidMount() {
+    fetch('https://api.frankfurter.app/latest')
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Request was either a 404 or 500');
+    }).then(data => {
+      this.setState({
+        date: data.date,
+      });
+    }).catch(error => console.log('Error!: ', error))
   }
 
   handleClick= (event)=> {
