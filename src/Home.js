@@ -1,11 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Currency } from './Search';
 
 import { IconContext } from 'react-icons';
 import { FaPlus, FaBalanceScale } from 'react-icons/fa';
-import { GoTriangleDown } from "react-icons/go";
-import { IoReorderTwoOutline } from "react-icons/io5";
-import { FaRegTrashAlt } from "react-icons/fa";
 
 const NavbarHome= ()=> {
   return (
@@ -23,47 +21,9 @@ const NavbarHome= ()=> {
     </nav>
   );
 };
-
-class Currency extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {}
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit= (event)=> {
-    event.preventDefault();
-  }
-
-  render() {    
-    const { shortName, longName, src, amount, rate, click, input }= this.props;
-    const value= amount * rate;
-
-    return (
-      <li className='row my-1 px-2'>
-      
-        <img className='col-2 flag p-0' src={ src } alt={ longName }></img>
-
-        <div className='col-2 my-auto p-0 text-center'>
-          <span className='short-name'>{ shortName }</span>
-          <Link to='/search'><GoTriangleDown /></Link>
-        </div>
-
-        <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
-          <input className='input h-100 w-100 text-end border-0' type='number' step='1' name={ shortName } value={ value } onClick={ click } onInput={ input }></input>
-        </form>
-        
-        <button type='button' className='btn col-1 m-auto'><IoReorderTwoOutline /></button>
-        
-        <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
-      </li>
-    );
-  }
-}
    
 // 最初に表示される0なくしたい→amount: undefinedだとなるけどこれで大丈夫？？
-class Home extends React.Component {
+export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -158,9 +118,6 @@ class Home extends React.Component {
       USD: '',
       ZAR: '',
     });
-
-    // ↓　後で消す　↓
-    console.log('Base Language: ', this.state.base);
   }
 
   // input毎にリクエストはやりすぎか？？
@@ -217,7 +174,7 @@ class Home extends React.Component {
       });
     }).catch(error => console.log('Error!: ', error))
   };
-    
+
   render() {
     const { date, amount, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EUR, GBP, HKD, HUF, IDR, ILS, INR, ISK, JPY, KRW, MXN, MYR, NOK, NZD, PHP, PLN, RON, RUB, SEK, SGD, THB, TRY, USD, ZAR }= this.state;
 
@@ -242,5 +199,3 @@ class Home extends React.Component {
     );
   }
 }
-
-export default Home;

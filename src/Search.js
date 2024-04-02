@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
+import { GoTriangleDown } from "react-icons/go";
+import { IoReorderTwoOutline } from "react-icons/io5";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 const NavbarSearch = () => {
   return (
@@ -21,36 +24,90 @@ const NavbarSearch = () => {
   );
 };
 
-class Search extends React.Component {
+let listToHome= ['EUR', 'USD', 'JPY']; 
+
+export class Currency extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      lists: [],
+      list: listToHome,
+    }
+
+    this.handleLoad = this.handleLoad.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleLoad= ()=> {
+    const shortName= this.props.shortName;
+    const { list }= this.state;
+    const element= document.getElementById(shortName);
+
+    // ここうまく機能してる？
+    if (list.indexOf(shortName) === -1) {
+      element.className= 'd-none';
+    } else {
+      element.classList.remove= 'd-none';
+    }
+  }
+
+  handleSubmit= (event)=> {
+    event.preventDefault();
+  };
+
+  render() {    
+    const { shortName, longName, src, amount, rate, click, input }= this.props;
+    const value= amount * rate;
+
+    return (
+      <li id={ shortName } className='row my-1 px-2' onLoad={ this.handleLoad }>
+        <img className='col-2 flag p-0' src={ src } alt={ longName }></img>
+        <div className='col-2 my-auto p-0 text-center'>
+          <span className='short-name'>{ shortName }</span>
+          <Link to='/search'><GoTriangleDown /></Link>
+        </div>
+        <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
+          <input className='input h-100 w-100 text-end border-0' type='number' step='1' name={ shortName } value={ value } onClick={ click } onInput={ input }></input>
+        </form>
+        <button type='button' className='btn col-1 m-auto'><IoReorderTwoOutline /></button>
+        <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+      </li>
+    );
+  }
+}
+
+export default class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkedList: '',
     };
 
+    this.handleLoad = this.handleLoad.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  // ここやってます
-  // stateのlist配列にボタンイベントのvalue(eur)追加成功、これをどうやってHomeに移すか？
+  // ここにチェックマークの情報を保持するコード書く
+  handleLoad= ()=> {
+    console.log('ごりら');
+  }
+
   handleClick = (event)=> {
-    const { lists }= this.state;
+    const { checkedList }= this.state;
     const language = event.target.value;
     
-    if (lists.indexOf(language) === -1) {
+    if (checkedList.indexOf(language) === -1) {
       this.setState({
-        lists: [...lists, language],
+        checkedList: [...checkedList, language],
       });
     } else {
       this.setState({
-        lists: lists.filter((item, index) => (item != language)),
+        checkedList: checkedList.filter((item, index) => (item != language)),
       });
     };
   }
 
   render() {
-    // ↓　後で消す　↓
-    console.log(this.state.lists);
+    listToHome= this.state.checkedList;
 
     return (
       <div>
@@ -79,5 +136,3 @@ class Search extends React.Component {
     );
   }
 }
-
-export default Search;

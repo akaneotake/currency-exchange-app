@@ -13,7 +13,7 @@ const Footer = () => {
   );
 };
 
-function App() {
+export default function App() {
   return (
     <Router>
       <Switch>
@@ -24,5 +24,3 @@ function App() {
     </Router>
       );
 };
-
-export default App;
