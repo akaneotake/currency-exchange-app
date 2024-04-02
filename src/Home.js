@@ -62,10 +62,10 @@ export default class Home extends React.Component {
       TRY: '',
       USD: '',
       ZAR: '',
-    }
+    };
     this.handleClick = this.handleClick.bind(this);
     this.handleInput = this.handleInput.bind(this);
-  }
+  };
 
   componentDidMount() {
     fetch('https://api.frankfurter.app/latest')
@@ -79,7 +79,7 @@ export default class Home extends React.Component {
         date: data.date,
       });
     }).catch(error => console.log('Error!: ', error))
-  }
+  };
 
   handleClick= (event)=> {
     this.setState({
@@ -118,7 +118,7 @@ export default class Home extends React.Component {
       USD: '',
       ZAR: '',
     });
-  }
+  };
 
   // input毎にリクエストはやりすぎか？？
   handleInput= (event)=> {
@@ -197,5 +197,5 @@ export default class Home extends React.Component {
         </div>
      </div>
     );
-  }
-}
+  };
+};

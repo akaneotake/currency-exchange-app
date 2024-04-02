@@ -24,31 +24,31 @@ const NavbarSearch = () => {
   );
 };
 
+// Grobal variable to store the checked list & use them in Currency, ChooseCurrency and Search classes.
 let listToHome= ['EUR', 'USD', 'JPY']; 
 
+// Insert the list of currency in Home directory
 export class Currency extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: listToHome,
+      checkedList: listToHome,
     }
-
     this.handleLoad = this.handleLoad.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleLoad= ()=> {
     const shortName= this.props.shortName;
-    const { list }= this.state;
+    const { checkedList }= this.state;
     const element= document.getElementById(shortName);
 
-    // ここうまく機能してる？
-    if (list.indexOf(shortName) === -1) {
+    if (checkedList.indexOf(shortName) === -1) {
       element.className= 'd-none';
     } else {
       element.classList.remove= 'd-none';
-    }
-  }
+    };
+  };
 
   handleSubmit= (event)=> {
     event.preventDefault();
@@ -72,28 +72,59 @@ export class Currency extends React.Component {
         <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
       </li>
     );
-  }
-}
+  };
+};
+
+class ChooseCurrency extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state= {
+      checkedList: listToHome,
+    };
+    this.handleLoad = this.handleLoad.bind(this);
+  };
+
+  // ここにチェックマークの情報を保持するコード書く
+  handleLoad= ()=> {
+    const { checkedList }= this.state;
+    const shortName= this.props.shortName;
+    const element= document.getElementById(shortName);
+
+    if (checkedList.indexOf(shortName) == -1) {
+      element.checked= false;
+    } else {
+      element.checked= true;
+    };
+  };
+
+  render() {
+    const { shortName, longName, src, click }= this.props;
+
+    return(
+      <li className='row my-2' onLoad={ this.handleLoad }>
+        <input id={ shortName } className='checkbox col-1' type='checkbox' name={ shortName } onClick={ click }></input>
+        <img className='col-2 flag' src={ src } alt={ longName }></img>
+        <div className='col-9 currency-name'>
+          <p className='short-name'>{ shortName }</p>
+          <p>{ longName }</p>
+        </div>
+      </li>
+    );
+  };
+};
 
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      checkedList: '',
+      checkedList: listToHome,
     };
-
-    this.handleLoad = this.handleLoad.bind(this);
     this.handleClick = this.handleClick.bind(this);
-  }
-
-  // ここにチェックマークの情報を保持するコード書く
-  handleLoad= ()=> {
-    console.log('ごりら');
-  }
+  };
 
   handleClick = (event)=> {
     const { checkedList }= this.state;
-    const language = event.target.value;
+    const language = event.target.name;
     
     if (checkedList.indexOf(language) === -1) {
       this.setState({
@@ -101,38 +132,28 @@ export default class Search extends React.Component {
       });
     } else {
       this.setState({
-        checkedList: checkedList.filter((item, index) => (item != language)),
+        checkedList: checkedList.filter((item) => (item != language)),
       });
     };
-  }
+  };
 
   render() {
     listToHome= this.state.checkedList;
-
+    console.log(this.state.checkedList);
+    
     return (
       <div>
         <NavbarSearch />
         <ul className='container my-4'>
-          <li className='row my-2'>
-            <input className='checkbox col-1' type='checkbox' value='EUR' onClick={ this.handleClick }></input>
-            <img className='col-2 flag' src='./images/eur.png' alt='Euro'></img>
-            <div className='col-9 currency-name'>
-              <p className='short-name'>EUR</p>
-              <p>Euro</p>
-            </div>
-          </li>
 
-          <li className='row my-2'>
-            <input className='checkbox col-1' type='checkbox' value='USD' onClick={ this.handleClick }></input>
-            <img className='col-2 flag' src='./images/usd.png' alt='United States Dollar'></img>
-            <div className='col-9 currency-name'>
-              <p className='short-name'>USD</p>
-              <p>United States Dollar</p>
-            </div>
-          </li>
+          <ChooseCurrency shortName='EUR' longName='Euro' src='./images/eur.png' click={ this.handleClick } />
+
+          <ChooseCurrency shortName='USD' longName='United States Dollar' src='./images/usd.png' click={ this.handleClick } />
+
+          <ChooseCurrency shortName='JPY' longName='Japanese Yen' src='./images/jpy.png' click={ this.handleClick } />
 
         </ul>  
       </div>
     );
-  }
-}
+  };
+};
