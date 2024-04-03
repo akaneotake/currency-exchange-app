@@ -27,17 +27,19 @@ const NavbarSearch = () => {
 // Grobal variable to store the checked list & use them in Currency, ChooseCurrency and Search classes.
 let listToHome= ['EUR', 'USD', 'JPY']; 
 
-// Insert the list of currency in Home directory
+// Insert the list of currency in Home page
 export class Currency extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       checkedList: listToHome,
-    }
+    };
     this.handleLoad = this.handleLoad.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // Unshown the currency which is not chosen in Search page
   handleLoad= ()=> {
     const shortName= this.props.shortName;
     const { checkedList }= this.state;
@@ -50,6 +52,20 @@ export class Currency extends React.Component {
     };
   };
 
+  // Trush bin function
+  handleClick= ()=> {
+    const shortName= this.props.shortName;
+    const element= document.getElementById(shortName);
+
+    element.className= 'd-none';
+        
+    listToHome= listToHome.filter((item) => (item != shortName));
+
+    this.setState({
+      checkedList: listToHome,
+    });
+  };
+
   handleSubmit= (event)=> {
     event.preventDefault();
   };
@@ -57,6 +73,7 @@ export class Currency extends React.Component {
   render() {    
     const { shortName, longName, src, amount, rate, click, input }= this.props;
     const value= amount * rate;
+    listToHome= this.state.checkedList;
 
     return (
       <li id={ shortName } className='row my-1 px-2' onLoad={ this.handleLoad }>
@@ -69,7 +86,7 @@ export class Currency extends React.Component {
           <input className='input h-100 w-100 text-end border-0' type='number' step='1' name={ shortName } value={ value } onClick={ click } onInput={ input }></input>
         </form>
         <button type='button' className='btn col-1 m-auto'><IoReorderTwoOutline /></button>
-        <button type='button' className='btn col-1'><FaRegTrashAlt /></button>
+        <button type='button' name={ shortName } className='btn col-1' onClick={ this.handleClick }><FaRegTrashAlt /></button>
       </li>
     );
   };
@@ -84,7 +101,6 @@ class ChooseCurrency extends React.Component {
     this.handleLoad = this.handleLoad.bind(this);
   };
 
-  // ここにチェックマークの情報を保持するコード書く
   handleLoad= ()=> {
     const { checkedList }= this.state;
     const shortName= this.props.shortName;
@@ -139,7 +155,6 @@ export default class Search extends React.Component {
 
   render() {
     listToHome= this.state.checkedList;
-    console.log(this.state.checkedList);
     
     return (
       <div>
@@ -157,3 +172,6 @@ export default class Search extends React.Component {
     );
   };
 };
+
+// すべての通貨を追加
+// 名前で通貨探す検索ボックス
