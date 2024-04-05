@@ -200,7 +200,6 @@ export default class Home extends React.Component {
   };
 };
 
-// 通貨を削除するボタン
 // ドラッグ＆ドロップでリスト並び替え
 // すべての通貨を追加
 // ブランド名のフォント変更
