@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Currencies } from "./currencyData";
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
@@ -97,6 +98,44 @@ class NavbarSearch extends React.Component {
   };
 };
 
+// Insert the list of currency in Search page
+class ChooseCurrency extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state= {
+      checkedList: listToHome,
+    };
+    this.handleLoad = this.handleLoad.bind(this);
+  };
+
+  handleLoad= ()=> {
+    const { checkedList }= this.state;
+    const shortName= this.props.shortName;
+    const element= document.getElementById(shortName);
+
+    if (checkedList.indexOf(shortName) == -1) {
+      element.checked= false;
+    } else {
+      element.checked= true;
+    };
+  };
+
+  render() {
+    const { shortName, longName, src, click }= this.props;
+
+    return(
+      <li className='currencyInSP row my-2' onLoad={ this.handleLoad } data-short={ shortName } data-long={ longName }>
+        <input id={ shortName } className='checkbox col-1' type='checkbox' name={ shortName } onClick={ click }></input>
+        <img className='col-2 flag' src={ src } alt={ longName }></img>
+        <div className='col-9 currency-name'>
+          <p className='short-name'>{ shortName }</p>
+          <p className='long-name'>{ longName }</p>
+        </div>
+      </li>
+    );
+  };
+};
+
 // Grobal variable to store the checked list & use them in Currency, ChooseCurrency and Search classes.
 let listToHome= ['EUR', 'USD', 'JPY']; 
 
@@ -165,43 +204,6 @@ export class Currency extends React.Component {
   };
 };
 
-class ChooseCurrency extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state= {
-      checkedList: listToHome,
-    };
-    this.handleLoad = this.handleLoad.bind(this);
-  };
-
-  handleLoad= ()=> {
-    const { checkedList }= this.state;
-    const shortName= this.props.shortName;
-    const element= document.getElementById(shortName);
-
-    if (checkedList.indexOf(shortName) == -1) {
-      element.checked= false;
-    } else {
-      element.checked= true;
-    };
-  };
-
-  render() {
-    const { shortName, longName, src, click }= this.props;
-
-    return(
-      <li className='currencyInSP row my-2' onLoad={ this.handleLoad } data-short={ shortName } data-long={ longName }>
-        <input id={ shortName } className='checkbox col-1' type='checkbox' name={ shortName } onClick={ click }></input>
-        <img className='col-2 flag' src={ src } alt={ longName }></img>
-        <div className='col-9 currency-name'>
-          <p className='short-name'>{ shortName }</p>
-          <p className='long-name'>{ longName }</p>
-        </div>
-      </li>
-    );
-  };
-};
-
 export default class Search extends React.Component {
   constructor(props) {
     super(props);
@@ -245,5 +247,3 @@ export default class Search extends React.Component {
     );
   };
 };
-
-// すべての通貨を追加

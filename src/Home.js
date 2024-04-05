@@ -190,7 +190,7 @@ export default class Home extends React.Component {
 
             <Currency shortName='USD' longName='United States Dollar' src='./images/usd.png' amount={ amount } rate={ USD } click={ this.handleClick } input={ this.handleInput } />
 
-            <Currency shortName='JPY' longName='Japan' src='./images/jpy.png' amount={ amount } rate={ JPY } click={ this.handleClick } input={ this.handleInput } />
+            <Currency shortName='JPY' longName='Japanese Yen' src='./images/jpy.png' amount={ amount } rate={ JPY } click={ this.handleClick } input={ this.handleInput } />
 
           </ul>
         </div>
@@ -200,5 +200,4 @@ export default class Home extends React.Component {
 };
 
 // ドラッグ＆ドロップでリスト並び替え
-// すべての通貨を追加
-// ブランド名のフォント変更
+// すべての通貨を追加？
