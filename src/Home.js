@@ -7,10 +7,10 @@ import { FaPlus, FaBalanceScale } from 'react-icons/fa';
 
 const NavbarHome= ()=> {
   return (
-    <nav className='navbar border-bottom shadow-sm'>
+    <nav className='navbar navbar-home border-bottom shadow-sm'>
       <div className="container-fluid">
         <Link to='/' className='navbar-brand mx-auto'>
-          <h5 className='mb-0'><FaBalanceScale /> HOW MUCH in...</h5>
+          <h5 className='mb-0 space-mono-bold-italic'><FaBalanceScale /> HOW MUCH in...</h5>
         </Link>
         <IconContext.Provider value={{ size: '20px' }}>
           <Link to='/search'>
@@ -120,7 +120,6 @@ export default class Home extends React.Component {
     });
   };
 
-  // input毎にリクエストはやりすぎか？？
   handleInput= (event)=> {
     const { base }= this.state;
     const amount= event.target.value;
