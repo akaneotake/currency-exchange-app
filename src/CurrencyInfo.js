@@ -1,16 +1,16 @@
-export default Currencies = [
+export const Currencies = [
     {
-      shortName: 'EUR',
+      name: 'EUR',
       longName: 'Euro',
       image: './images/eur.png',
     },
     {
-      shortName: 'USD',
+      name: 'USD',
       longName: 'United States Dollar',
       image: './images/usd.png',
     },
     {
-      shortName: 'JPY',
+      name: 'JPY',
       longName: 'Japanese Yen',
       image: './images/jpy.png',
     },
