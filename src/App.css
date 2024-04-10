@@ -21,7 +21,6 @@ button {
 
 .navbar-home {
   background-color: orange;
-
 }
 
 .flag {
@@ -31,6 +30,13 @@ button {
 
 .short-name {
   font-weight: bold;
+}
+
+.no-spin::-webkit-inner-spin-button,
+.no-spin::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    -moz-appearance:textfield;
 }
 
 .checkbox {

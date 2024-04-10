@@ -143,7 +143,7 @@ export class Currency extends React.Component {
             <Link to='/search'><GoTriangleDown /></Link>
           </div>
           <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
-            <input className='h-100 w-100 text-end border-0' type='number' step='1' name={ name } value={ this.state[name] * amount } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+            <input className='h-100 w-100 text-end border-0 no-spin' type='number' step='1' name={ name } value={ this.state[name] * amount } onClick={ this.handleClick } onInput={ this.handleInput }></input>
           </form>
           <button type='button' className='btn col-1 m-auto'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.handleClickForBin }><FaRegTrashAlt /></button>
@@ -190,5 +190,3 @@ export class ChooseCurrency extends React.Component {
     });
   };
 }; 
-
-// 表示される小数点の数制限する？下2桁くらいに
