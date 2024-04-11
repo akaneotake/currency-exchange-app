@@ -54,6 +54,12 @@ export class Currency extends React.Component {
     this.handleInput = this.handleInput.bind(this);
     this.handleClickForBin = this.handleClickForBin.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDragStart = this.handleDragStart.bind(this);
+    this.handleDragEnter = this.handleDragEnter.bind(this);
+    this.handleDragOver = this.handleDragOver.bind(this);
+    this.handleDragLeave = this.handleDragLeave.bind(this);
+    this.handleDragEnd = this.handleDragEnd.bind(this);
+    this.handleDrop = this.handleDrop.bind(this);
   };
 
   handleClick= (event)=> {
@@ -127,6 +133,49 @@ export class Currency extends React.Component {
     event.preventDefault();
   };
 
+  // Drag and Drop function
+  // リスト一番下の要素をすぐ上に移動できないのはなぜ？
+  handleDragStart= (event)=> {
+    event.dataTransfer.setData('text', event.currentTarget.id);
+    event.currentTarget.classList.add('dragging');
+    event.currentTarget.classList.remove('slideIn');
+  };
+
+  handleDragEnter= (event)=> {
+    event.currentTarget.classList.add('drop-zone');
+    event.currentTarget.classList.add('pointer-event');
+  };
+
+  handleDragOver= (event)=> {
+    event.preventDefault();
+  };
+
+  handleDragLeave= (event)=> {
+    event.currentTarget.classList.remove('drop-zone');
+  };
+
+  handleDragEnd= (event)=> {
+    event.currentTarget.classList.add('slide-in');
+
+    const li = [...document.querySelectorAll(".currency-home")];
+    li.forEach((i)=> {
+      i.classList.remove('drop-zone');
+      i.classList.remove('dragging');
+      i.classList.remove('pointer-event');
+    });
+  }
+
+  handleDrop= (event)=> {
+    event.preventDefault();
+    const li = [...document.querySelectorAll(".currency-home")];
+
+    if (li.indexOf(event.currentTarget) === 0) {
+        event.currentTarget.before(document.getElementById(event.dataTransfer.getData('text')));
+    } else {
+        event.currentTarget.after(document.getElementById(event.dataTransfer.getData('text')));
+    };
+  };
+
   render() {  
     const { amount }= this.state;
 
@@ -136,8 +185,8 @@ export class Currency extends React.Component {
       const classes= `currency-home row my-1 px-2 ${display}`;
 
       return( 
-        <li id={ name } key={ name } className={ classes } onLoad={ this.handleLoad }>
-          <img className='col-2 flag p-0' src={ image } alt={ longName }></img>
+        <li id={ name } key={ name } className={ classes } onLoad={ this.handleLoad } onDragStart={ this.handleDragStart } onDragEnter={ this.handleDragEnter } onDragOver={ this.handleDragOver } onDragLeave={ this.handleDragLeave } onDragEnd={this.handleDragEnd} onDrop={ this.handleDrop }>
+          <img className='col-2 flag p-0' src={ image } alt={ longName } draggable='false'></img>
           <div className='col-2 my-auto p-0 text-center'>
             <span className='short-name'>{ name }</span>
             <Link to='/search'><GoTriangleDown /></Link>
@@ -145,7 +194,7 @@ export class Currency extends React.Component {
           <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
             <input className='h-100 w-100 text-end border-0 no-spin' type='number' step='1' name={ name } value={ this.state[name] * amount } onClick={ this.handleClick } onInput={ this.handleInput }></input>
           </form>
-          <button type='button' className='btn col-1 m-auto'><IoReorderTwoOutline /></button>
+          <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.handleClickForBin }><FaRegTrashAlt /></button>
         </li>
       );

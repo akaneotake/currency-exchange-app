@@ -13,7 +13,7 @@ button {
   background-color: transparent;
 }
 
-.space-mono-bold-italic {
+.site-name {
   font-family: "Space Mono", monospace;
   font-weight: 700;
   font-style: italic;
@@ -37,6 +37,35 @@ button {
     -webkit-appearance: none;
     margin: 0;
     -moz-appearance:textfield;
+}
+
+.dnd {
+  border: 0;
+}
+
+.dragging {
+  opacity: 0.5;
+}
+
+.drop-zone {
+  border: 2px dashed orange;
+}
+
+.slide-in {
+  animation: slidein 500ms ease-out 1;
+}
+
+.pointer-event * {
+  pointer-events: none;
+}
+
+@keyframes slidein {
+  0% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .checkbox {
