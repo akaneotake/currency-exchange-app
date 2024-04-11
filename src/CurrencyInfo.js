@@ -125,11 +125,6 @@ export const Currencies = [
     image: './images/ron.png',
   },
   {
-    name: 'RUB',
-    longName: 'Russian Ruble',
-    image: './images/rub.png',
-  },
-  {
     name: 'SEK',
     longName: 'Swedish Krona',
     image: './images/sek.png',

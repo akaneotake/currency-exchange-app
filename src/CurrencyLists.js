@@ -16,7 +16,7 @@ export class Currency extends React.Component {
     this.state = {
       date: '',
       base: '',
-      amount: undefined,
+      amount: 0,
       AUD: '',
       BGN: '',
       BRL: '',
@@ -42,7 +42,6 @@ export class Currency extends React.Component {
       PHP: '',
       PLN: '',
       RON: '',
-      RUB: '',
       SEK: '',
       SGD: '',
       THB: '',
@@ -108,7 +107,6 @@ export class Currency extends React.Component {
         PHP: data.rates.PHP,
         PLN: data.rates.PLN,
         RON: data.rates.RON,
-        RUB: data.rates.RUB,
         SEK: data.rates.SEK,
         SGD: data.rates.SGD,
         THB: data.rates.THB,
@@ -182,7 +180,7 @@ export class Currency extends React.Component {
     return Currencies.map(({ name, longName, image })=> {
       // Unshown the currency which is not chosen in Search page
       const display= listToHome.includes(name)? '' : 'd-none';
-      const classes= `currency-home row my-1 px-2 ${display}`;
+      const classes= `currency-home row my-1 px-2 mx-lg-5 ${display}`;
 
       return( 
         <li id={ name } key={ name } className={ classes } onLoad={ this.handleLoad } onDragStart={ this.handleDragStart } onDragEnter={ this.handleDragEnter } onDragOver={ this.handleDragOver } onDragLeave={ this.handleDragLeave } onDragEnd={this.handleDragEnd} onDrop={ this.handleDrop }>
@@ -192,7 +190,7 @@ export class Currency extends React.Component {
             <Link to='/search'><GoTriangleDown /></Link>
           </div>
           <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
-            <input className='h-100 w-100 text-end border-0 no-spin' type='number' step='1' name={ name } value={ this.state[name] * amount } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+            <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ Number.isInteger(this.state[name] * amount)? this.state[name] * amount : (this.state[name] * amount).toFixed(2) } onClick={ this.handleClick } onInput={ this.handleInput }></input>
           </form>
           <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.handleClickForBin }><FaRegTrashAlt /></button>
@@ -227,10 +225,10 @@ export class ChooseCurrency extends React.Component {
       const checked= listToHome.includes(name)? 'checked' : '';
 
       return(
-        <li className='currency-search row my-2' key={ name } data-short={ name } data-long={ longName }>
-          <input className='checkbox col-1' type='checkbox' defaultChecked={ checked } name={ name } onClick={ this.handleClick }></input>
+        <li className='currency-search row my-2 mx-lg-5' key={ name } data-short={ name } data-long={ longName }>
+          <input className='checkbox col-2' type='checkbox' defaultChecked={ checked } name={ name } onClick={ this.handleClick }></input>
           <img className='col-2 flag' src={ image } alt={ longName }></img>
-          <div className='col-9 currency-name'>
+          <div className='col-8 currency-name'>
             <p className='short-name'>{ name }</p>
             <p className='long-name'>{ longName }</p>
           </div>

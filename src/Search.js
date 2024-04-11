@@ -105,9 +105,11 @@ export default class Search extends React.Component {
     return (
       <div>
         <NavbarSearch />
-        <ul className='container my-4'>
-          <ChooseCurrency />
-        </ul>  
+        <div className='container'>
+          <ul className='my-4 p-0'>
+            <ChooseCurrency />
+          </ul>
+        </div>  
       </div>
     );
   };

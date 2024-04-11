@@ -22,7 +22,6 @@ const NavbarHome= ()=> {
   );
 };
    
-// 最初に表示される0なくしたい→amount: undefinedだとなるけどこれで大丈夫？？
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
