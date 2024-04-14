@@ -4,6 +4,7 @@ import { ChooseCurrency } from './CurrencyLists';
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
+import { Currencies } from './CurrencyInfo';
 
 class NavbarSearch extends React.Component {
   constructor(props) {
@@ -13,25 +14,13 @@ class NavbarSearch extends React.Component {
     };
   };
 
-  // Get 'index' state from shortName & long Name
+  // Get 'index' state from Currencies name & longName
   componentDidMount() {
-    const shortNameP= document.querySelectorAll('.short-name');
-    const longNameP= document.querySelectorAll('.long-name');
-
-    let shortName= [];
-    let longName= [];
-    
-    shortNameP.forEach((item)=> {
-      const name= (item.textContent);
-      shortName= [...shortName, name];
-    });
-    longNameP.forEach((item)=> {
-      const name= (item.textContent);
-      longName= [...longName, name];
-    });
+    const name= Currencies.map(i=>i.name);
+    const longName= Currencies.map(i=>i.longName);
 
     this.setState({
-      index: [...shortName, ...longName],
+      index: [...name, ...longName],
     });
   };
 
@@ -83,9 +72,9 @@ class NavbarSearch extends React.Component {
               <button className='btn'><FaArrowLeft /></button>
             </Link> 
           </IconContext.Provider> 
-          <div className='col-10'>     
+          <form className='col-10' onSubmit={ this.handleSubmit }>     
             <input type='search' placeholder='Search Currency' aria-label='Search' className='form-control border-0' onChange={ this.handleChange }></input>
-          </div>
+          </form>
         </div>
       </nav>
     );

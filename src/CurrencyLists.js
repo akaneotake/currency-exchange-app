@@ -16,7 +16,7 @@ export class Currency extends React.Component {
     this.state = {
       date: '',
       base: '',
-      amount: 0,
+      amount: null,
       AUD: '',
       BGN: '',
       BRL: '',

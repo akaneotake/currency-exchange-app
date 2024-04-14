@@ -48,7 +48,7 @@ export default class Home extends React.Component {
     const { date }= this.state;
 
     return (      
-      <React.Fragment id='home'>
+      <React.Fragment>
         <NavbarHome />
         <div className='container'>
           <h6 className='text-center my-2'>
