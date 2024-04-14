@@ -19,6 +19,7 @@ export default function App() {
       <Switch>
         <Route path="/" exact component={ Home } />
         <Route path="/search" component={ Search } />
+        <Route render={()=> <h1 className='text-center py-3'>404 Not Found</h1>} />
       </Switch>
       <Footer />
     </Router>
