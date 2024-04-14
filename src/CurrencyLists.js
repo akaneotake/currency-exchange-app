@@ -49,16 +49,6 @@ export class Currency extends React.Component {
       USD: '',
       ZAR: '',
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleInput = this.handleInput.bind(this);
-    this.handleClickForBin = this.handleClickForBin.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDragStart = this.handleDragStart.bind(this);
-    this.handleDragEnter = this.handleDragEnter.bind(this);
-    this.handleDragOver = this.handleDragOver.bind(this);
-    this.handleDragLeave = this.handleDragLeave.bind(this);
-    this.handleDragEnd = this.handleDragEnd.bind(this);
-    this.handleDrop = this.handleDrop.bind(this);
   };
 
   handleClick= (event)=> {
@@ -206,7 +196,6 @@ export class ChooseCurrency extends React.Component {
     super(props);
     this.state= {
     };
-    this.handleClick = this.handleClick.bind(this);
   };
 
   handleClick= (event)=> {

@@ -11,8 +11,6 @@ class NavbarSearch extends React.Component {
     this.state = {
       index: [],
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   };
 
   // Get 'index' state from shortName & long Name
