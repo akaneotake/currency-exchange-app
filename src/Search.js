@@ -103,14 +103,14 @@ export default class Search extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <NavbarSearch />
         <div className='container'>
           <ul className='my-4 p-0'>
             <ChooseCurrency />
           </ul>
         </div>  
-      </div>
+      </>
     );
   };
 };

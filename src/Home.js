@@ -48,7 +48,7 @@ export default class Home extends React.Component {
     const { date }= this.state;
 
     return (      
-      <div id='home'>
+      <React.Fragment id='home'>
         <NavbarHome />
         <div className='container'>
           <h6 className='text-center my-2'>
@@ -58,7 +58,7 @@ export default class Home extends React.Component {
             <Currency />
           </ul>
         </div>
-     </div>
+     </React.Fragment>
     );
   };
 };
