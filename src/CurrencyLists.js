@@ -5,6 +5,7 @@ import { Currencies } from './CurrencyInfo';
 import { GoTriangleDown } from "react-icons/go";
 import { IoReorderTwoOutline } from "react-icons/io5";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { BsGraphUpArrow } from "react-icons/bs";
 
 // Grobal variable to store the checked list & use them in Currency, ChooseCurrency and Search classes.
 let listToHome= ['EUR', 'USD', 'JPY'];
@@ -135,9 +136,10 @@ export class Currency extends React.Component {
             <span className='short-name'>{ name }</span>
             <Link to='/search'><GoTriangleDown /></Link>
           </div>
-          <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
+          <form className='col-5 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
             <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ this.getValue(name) } onFocus={ this.getBase } onClick={ this.getRates } onInput={ this.getAmount }></input>
           </form>
+          <Link to='/historical-rate'><BsGraphUpArrow /></Link>
           <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.deleteCurrency }><FaRegTrashAlt /></button>
         </li>

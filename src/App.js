@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import Search from './Search';
+import HistoricalRate from './HistoricalRate';
 import './App.css';
 
 const Footer = () => {
@@ -17,8 +18,9 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact component={ Home } />
-        <Route path="/search" component={ Search } />
+        <Route path='/' exact component={ Home } />
+        <Route path='/search' component={ Search } />
+        <Route path='/historical-rate' component={ HistoricalRate } />
         <Route render={()=> <h1 className='text-center py-3'>404 Not Found</h1>} />
       </Switch>
       <Footer />
