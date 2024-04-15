@@ -160,7 +160,9 @@ export class Currency extends React.Component {
           <form className='col-5 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
             <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ this.getValue(name) } onFocus={ this.getBase } onClick={ this.getRates } onInput={ this.getAmount }></input>
           </form>
-          <Link to={`/historical-rate?base=${base}&quote=${name}`} className='col-1 mt-1'><span className='to-historical-rate' name={ name }><BsGraphUpArrow /></span></Link>
+          <div className='col-1'>
+            <Link to={`/historical-rate?base=${base}&quote=${name}`} className='to-historical-rate mt-1' name={ name }><BsGraphUpArrow /></Link>
+          </div>
           <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.deleteCurrency }><FaRegTrashAlt /></button>
         </li>
