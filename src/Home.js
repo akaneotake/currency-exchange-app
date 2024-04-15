@@ -7,7 +7,7 @@ import { FaPlus, FaBalanceScale } from 'react-icons/fa';
 
 const NavbarHome= ()=> {
   return (
-    <nav className='navbar navbar-home border-bottom shadow-sm'>
+    <nav className='navbar navbar-orange border-bottom shadow-sm'>
       <div className="container-fluid">
         <Link to='/' className='navbar-brand mx-auto'>
           <h5 className='mb-0 site-name'><FaBalanceScale /> HOW MUCH in...</h5>
@@ -48,7 +48,7 @@ export default class Home extends React.Component {
     const { date }= this.state;
 
     return (      
-      <div id='home'>
+      <React.Fragment>
         <NavbarHome />
         <div className='container'>
           <h6 className='text-center my-2'>
@@ -58,7 +58,7 @@ export default class Home extends React.Component {
             <Currency />
           </ul>
         </div>
-     </div>
+     </React.Fragment>
     );
   };
 };
