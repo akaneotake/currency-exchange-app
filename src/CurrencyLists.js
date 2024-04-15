@@ -22,6 +22,24 @@ export class Currency extends React.Component {
     };
   };
 
+  componentDidMount() {
+    this.toChart(this.state.base);
+  }
+
+  toChart= (base)=> {
+    const chart= document.querySelectorAll('.to-historical-rate');
+
+    chart.forEach(i=> {
+      if (!base) {
+        i.classList.add('d-none');
+      } else if (base == i.getAttribute('name')) {
+        i.classList.add('d-none');
+      } else {
+        i.classList.remove('d-none');
+      }
+    });
+  }
+
   getBase= (event)=> {
     this.setState({
       base: event.target.name,
@@ -31,6 +49,7 @@ export class Currency extends React.Component {
 
   getRates= ()=> {
     const { base }= this.state;
+    this.toChart(base);
    
     fetch(`https://api.frankfurter.app/latest?from=${ base }`)
     .then(response => {
@@ -114,7 +133,7 @@ export class Currency extends React.Component {
 
   handleDrop= (event)=> {
     event.preventDefault();
-    const li = [...document.querySelectorAll(".currency-home")];
+    const li = [...document.querySelectorAll('.currency-home')];
 
     if (li.indexOf(event.currentTarget) === 0) {
         event.currentTarget.before(document.getElementById(event.dataTransfer.getData('text')));
@@ -125,7 +144,6 @@ export class Currency extends React.Component {
 
   render() {  
     const { base }= this.state;
-    console.log(base);
 
     return Currencies.map(({ name, longName, image })=> {
       // Unshown the currency which is not chosen in Search page
@@ -142,7 +160,7 @@ export class Currency extends React.Component {
           <form className='col-5 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
             <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ this.getValue(name) } onFocus={ this.getBase } onClick={ this.getRates } onInput={ this.getAmount }></input>
           </form>
-          <Link to={`/historical-rate?base=${base}&quote=${name}`} className='col-1 mt-1'><BsGraphUpArrow /></Link>
+          <Link to={`/historical-rate?base=${base}&quote=${name}`} className='col-1 mt-1'><span className='to-historical-rate' name={ name }><BsGraphUpArrow /></span></Link>
           <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.deleteCurrency }><FaRegTrashAlt /></button>
         </li>
