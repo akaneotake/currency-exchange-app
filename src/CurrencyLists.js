@@ -16,52 +16,21 @@ export class Currency extends React.Component {
     this.state = {
       date: '',
       base: '',
-      amount: null,
-      AUD: '',
-      BGN: '',
-      BRL: '',
-      CAD: '',
-      CHF: '',
-      CNY: '',
-      CZK: '',
-      DKK: '',
-      EUR: '',
-      GBP: '',
-      HKD: '',
-      HUF: '',
-      IDR: '',
-      ILS: '',
-      INR: '',
-      ISK: '',
-      JPY: '',
-      KRW: '',
-      MXN: '',
-      MYR: '',
-      NOK: '',
-      NZD: '',
-      PHP: '',
-      PLN: '',
-      RON: '',
-      SEK: '',
-      SGD: '',
-      THB: '',
-      TRY: '',
-      USD: '',
-      ZAR: '',
+      amount: '',
+      retes: [],
     };
   };
 
-  handleClick= (event)=> {
+  getBase= (event)=> {
     this.setState({
       base: event.target.name,
-      amount: undefined,
+      amount: '',
     });
-  };
+  }
 
-  handleInput= (event)=> {
+  getRates= ()=> {
     const { base }= this.state;
-    const amount= event.target.value;
-
+   
     fetch(`https://api.frankfurter.app/latest?from=${ base }`)
     .then(response => {
       if (response.ok) {
@@ -69,56 +38,45 @@ export class Currency extends React.Component {
       }
       throw new Error('Request was either a 404 or 500');
     }).then(data => {
-      this.setState({
-        date: data.date,
-        amount: [amount],
-        AUD: data.rates.AUD,
-        BGN: data.rates.BGN,
-        BRL: data.rates.BRL,
-        CAD: data.rates.CAD,
-        CHF: data.rates.CHF,
-        CNY: data.rates.CNY,
-        CZK: data.rates.CZK,
-        DKK: data.rates.DKK,
-        EUR: data.rates.EUR,
-        GBP: data.rates.GBP,
-        HKD: data.rates.HKD,
-        HUF: data.rates.HUF,
-        IDR: data.rates.IDR,
-        ILS: data.rates.ILS,
-        INR: data.rates.INR,
-        ISK: data.rates.ISK,
-        JPY: data.rates.JPY,
-        KRW: data.rates.KRW,
-        MXN: data.rates.MXN,
-        MYR: data.rates.MYR,
-        NOK: data.rates.NOK,
-        NZD: data.rates.NZD,
-        PHP: data.rates.PHP,
-        PLN: data.rates.PLN,
-        RON: data.rates.RON,
-        SEK: data.rates.SEK,
-        SGD: data.rates.SGD,
-        THB: data.rates.THB,
-        TRY: data.rates.TRY,
-        USD: data.rates.USD,
-        ZAR: data.rates.ZAR,
-        [base]: 1,
-      });
+      const rates= Object.keys(data.rates)
+      .filter(i=> i !== base)
+      .map(i=> ({
+        [i]: data.rates[i],
+      }))
+      this.setState({ rates });
     }).catch(error => console.log('Error!: ', error))
   };
 
+  getAmount= (event)=> {
+    this.setState({
+      amount: event.target.value,
+    })
+  };
+
+  getValue= (name)=> {
+    const { base, amount, rates }= this.state;
+
+    if (!amount) {
+      return '';
+    } else if (base === name) {
+      return amount;
+    } else {
+      const rate= Object.values(rates.find(i=> i[name]));
+      return (rate * amount).toFixed(2);
+    };
+  };
+
+  handleSubmit= (event)=> {
+    event.preventDefault();
+  };
+
   // Trush bin function
-  handleClickForBin= (event)=> {
+  deleteCurrency= (event)=> {
     const name= event.currentTarget.name;
     const element= document.querySelector(`#${name}`);
 
     element.classList.add('d-none');        
     listToHome= listToHome.filter((item) => (item !== name));
-  };
-
-  handleSubmit= (event)=> {
-    event.preventDefault();
   };
 
   // Drag and Drop function
@@ -165,25 +123,23 @@ export class Currency extends React.Component {
   };
 
   render() {  
-    const { amount }= this.state;
-
     return Currencies.map(({ name, longName, image })=> {
       // Unshown the currency which is not chosen in Search page
       const display= listToHome.includes(name)? '' : 'd-none';
       const classes= `currency-home row my-1 px-2 mx-lg-5 ${display}`;
 
       return( 
-        <li id={ name } key={ name } className={ classes } onLoad={ this.handleLoad } onDragStart={ this.handleDragStart } onDragEnter={ this.handleDragEnter } onDragOver={ this.handleDragOver } onDragLeave={ this.handleDragLeave } onDragEnd={this.handleDragEnd} onDrop={ this.handleDrop }>
+        <li id={ name } key={ name } className={ classes } onDragStart={ this.handleDragStart } onDragEnter={ this.handleDragEnter } onDragOver={ this.handleDragOver } onDragLeave={ this.handleDragLeave } onDragEnd={this.handleDragEnd} onDrop={ this.handleDrop }>
           <img className='col-2 flag p-0' src={ image } alt={ longName } draggable='false'></img>
           <div className='col-2 my-auto p-0 text-center'>
             <span className='short-name'>{ name }</span>
             <Link to='/search'><GoTriangleDown /></Link>
           </div>
           <form className='col-6 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
-            <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ Number.isInteger(this.state[name] * amount)? this.state[name] * amount : (this.state[name] * amount).toFixed(2) } onClick={ this.handleClick } onInput={ this.handleInput }></input>
+            <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ this.getValue(name) } onFocus={ this.getBase } onClick={ this.getRates } onInput={ this.getAmount }></input>
           </form>
           <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
-          <button type='button' name={ name } className='btn col-1' onClick={ this.handleClickForBin }><FaRegTrashAlt /></button>
+          <button type='button' name={ name } className='btn col-1' onClick={ this.deleteCurrency }><FaRegTrashAlt /></button>
         </li>
       );
     });
