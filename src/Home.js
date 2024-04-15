@@ -7,7 +7,7 @@ import { FaPlus, FaBalanceScale } from 'react-icons/fa';
 
 const NavbarHome= ()=> {
   return (
-    <nav className='navbar navbar-home border-bottom shadow-sm'>
+    <nav className='navbar navbar-orange border-bottom shadow-sm'>
       <div className="container-fluid">
         <Link to='/' className='navbar-brand mx-auto'>
           <h5 className='mb-0 site-name'><FaBalanceScale /> HOW MUCH in...</h5>

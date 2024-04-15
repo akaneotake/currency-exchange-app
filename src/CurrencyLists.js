@@ -124,6 +124,9 @@ export class Currency extends React.Component {
   };
 
   render() {  
+    const { base }= this.state;
+    console.log(base);
+
     return Currencies.map(({ name, longName, image })=> {
       // Unshown the currency which is not chosen in Search page
       const display= listToHome.includes(name)? '' : 'd-none';
@@ -139,7 +142,7 @@ export class Currency extends React.Component {
           <form className='col-5 p-0' autoComplete="off" onSubmit={ this.handleSubmit }>
             <input className='h-100 w-100 text-end border-0 input-home no-spin' type='number' step='1' name={ name } value={ this.getValue(name) } onFocus={ this.getBase } onClick={ this.getRates } onInput={ this.getAmount }></input>
           </form>
-          <Link to='/historical-rate'><BsGraphUpArrow /></Link>
+          <Link to={`/historical-rate?base=${base}&quote=${name}`} className='col-1 mt-1'><BsGraphUpArrow /></Link>
           <button type='button' className='btn col-1 m-auto dnd' draggable='true'><IoReorderTwoOutline /></button>
           <button type='button' name={ name } className='btn col-1' onClick={ this.deleteCurrency }><FaRegTrashAlt /></button>
         </li>
