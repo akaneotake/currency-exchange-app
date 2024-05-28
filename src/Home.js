@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Currency } from './CurrencyLists';
 
@@ -22,15 +22,10 @@ const NavbarHome= ()=> {
   );
 };
    
-export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      date: '',
-    };
-  };
+export default function Home() {
+  const [ date, setDate ] = useState('');
 
-  componentDidMount() {
+  useEffect(()=> {
     fetch('https://api.frankfurter.app/latest')
     .then(response => {
       if (response.ok) {
@@ -38,27 +33,21 @@ export default class Home extends React.Component {
       }
       throw new Error('Request was either a 404 or 500');
     }).then(data => {
-      this.setState({
-        date: data.date,
-      });
+      setDate(data.date)
     }).catch(error => console.log('Error!: ', error))
-  };
+  }, []);
 
-  render() {
-    const { date }= this.state;
-
-    return (      
-      <React.Fragment>
-        <NavbarHome />
-        <div className='container'>
-          <h6 className='text-center my-2'>
-            Latest Update: { date }
-          </h6>
-          <ul className='my-4 p-0'>
-            <Currency />
-          </ul>
-        </div>
-     </React.Fragment>
-    );
-  };
+  return (      
+    <React.Fragment>
+      <NavbarHome />
+      <div className='container'>
+        <h6 className='text-center my-2'>
+          Latest Update: { date }
+        </h6>
+        <ul className='my-4 p-0'>
+          <Currency />
+        </ul>
+      </div>
+    </React.Fragment>
+  );
 };
