@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Currency } from './CurrencyLists';
+import { Currency } from '../components/CurrencyLists';
 
 import { IconContext } from 'react-icons';
 import { FaPlus, FaBalanceScale } from 'react-icons/fa';
