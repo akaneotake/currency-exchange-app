@@ -1,33 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';import { Link } from 'react-router-dom';
 import { ChooseCurrency } from '../components/Currency';
 import { Currencies } from '../components/currencyInfo';
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
 
-class NavbarSearch extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      index: [],
-    };
-  };
+const NavbarSearch = ()=> {
+  const [index, setIndex ] = useState([]);
 
   // Get 'index' state from Currencies name & longName
-  componentDidMount() {
+  useEffect(()=> {
     const name= Currencies.map(i=>i.name);
     const longName= Currencies.map(i=>i.longName);
 
-    this.setState({
-      index: [...name, ...longName],
-    });
-  };
+    setIndex([...name, ...longName]);
+  }, [])
 
   // Search Box
-  handleChange= (event)=> {
+  const handleChange= (event)=> {
     const value= event.target.value;
-    const { index }= this.state;
     const li= document.querySelectorAll('.currency-search');
 
     // Devide currency 'index' to included and not included the search result  
@@ -59,45 +50,36 @@ class NavbarSearch extends React.Component {
     });
   };
 
-  handleSubmit= (event)=> {
+  const handleSubmit= (event)=> {
     event.preventDefault();
   };
 
-  render() {
-    return (
-      <nav className='navbar border-bottom shadow-sm'>
-        <div className="container-fluid">
-          <IconContext.Provider value={{ size: '20px' }} className='col-2'>
-            <Link to='/'>
-              <button className='btn'><FaArrowLeft /></button>
-            </Link> 
-          </IconContext.Provider> 
-          <form className='col-10' onSubmit={ this.handleSubmit }>     
-            <input type='search' placeholder='Search Currency' aria-label='Search' className='form-control border-0' onChange={ this.handleChange }></input>
-          </form>
-        </div>
-      </nav>
-    );
-  };
+  return (
+    <nav className='navbar border-bottom shadow-sm'>
+      <div className="container-fluid">
+        <IconContext.Provider value={{ size: '20px' }} className='col-2'>
+          <Link to='/'>
+            <button className='btn'><FaArrowLeft /></button>
+          </Link> 
+        </IconContext.Provider> 
+        <form className='col-10' onSubmit={ handleSubmit }>     
+          <input type='search' placeholder='Search Currency' aria-label='Search' className='form-control border-0' onChange={ handleChange }></input>
+        </form>
+      </div>
+    </nav>
+  );
+ 
 };
 
-export default class Search extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  };
-
-  render() {
-    return (
-      <>
-        <NavbarSearch />
-        <div className='container'>
-          <ul className='my-4 p-0'>
-            <ChooseCurrency />
-          </ul>
-        </div>  
-      </>
-    );
-  };
+export default function Search() {
+  return (
+    <>
+      <NavbarSearch />
+      <div className='container'>
+        <ul className='my-4 p-0'>
+          <ChooseCurrency />
+        </ul>
+      </div>  
+    </>
+  );
 };
