@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from '../Home/Home';
-import Search from '../Search';
-import HistoricalRate from '../HistoricalRate';
+import Home from './Home';
+import Search from './Search';
+import HistoricalRate from './HistoricalRate';
 import './App.css';
 
 const Footer = () => {

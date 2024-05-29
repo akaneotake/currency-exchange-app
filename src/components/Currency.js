@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Currencies } from './currencyInfo';
+import { Currencies } from '../components/currencyInfo';
 import { handleDragStart, handleDragEnter, handleDragOver, handleDragLeave, handleDragEnd, handleDrop } from './draggingList';
 
 import { GoTriangleDown } from "react-icons/go";
