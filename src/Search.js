@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ChooseCurrency } from './components/CurrencyLists';
+import { ChooseCurrency } from './components/Currency';
 
 import { IconContext } from 'react-icons';
 import { FaArrowLeft } from "react-icons/fa";
-import { Currencies } from './components/CurrencyInfo';
+import { Currencies } from './components/currencyInfo';
 
 class NavbarSearch extends React.Component {
   constructor(props) {

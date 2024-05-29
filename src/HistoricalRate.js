@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 
@@ -22,22 +22,16 @@ const NavbarHistoricalRate= ()=> {
   );
 };
 
-export default class HistoricalRate extends React.Component {
-  constructor(props) {
-    super(props);
-    const params = new URLSearchParams(props.location.search);
-    this.state = {
-      date: '',
-      base: params.get('base'),
-      quote: params.get('quote'),
-    };
-    this.chartRef = React.createRef();
-  };
+export default function HistoricalRate(props) {  
+  const [ date, setDate ] = useState('');
+  const chartRef = React.createRef();
 
-  componentDidMount() {
-    const { base, quote } = this.state;
-    console.log(base, quote);
-    this.getHistoricalRates(base, quote);
+  const params = new URLSearchParams(props.location.search);
+  const base = params.get('base');
+  const quote = params.get('quote');
+
+  useEffect(()=> {
+    getHistoricalRates(base, quote);
 
     fetch('https://api.frankfurter.app/latest')
     .then(response => {
@@ -46,13 +40,11 @@ export default class HistoricalRate extends React.Component {
       }
       throw new Error('Request was either a 404 or 500');
     }).then(data => {
-      this.setState({
-        date: data.date,
-      });
+      setDate(data.date);
     }).catch(error => console.log('Error!: ', error))
-  };
+  }, []);
 
-  getHistoricalRates= (base, quote)=> {
+  const getHistoricalRates= (base, quote)=> {
     const endDate= new Date().toISOString().split('T')[0];
     const startDate = new Date((new Date).getTime() - (30 * 24 * 60 * 60 * 1000)).toISOString().split('T')[0];
 
@@ -66,17 +58,20 @@ export default class HistoricalRate extends React.Component {
       const chartLabels = Object.keys(data.rates).map(date => date.slice(5).replace(/^0+/, ''));
       const chartData = Object.values(data.rates).map(rate => rate[quote]);
       const chartLabel = `${base}/${quote}`;
-      this.buildChart(chartLabels, chartData, chartLabel);
+
+      buildChart(chartLabels, chartData, chartLabel);
     }).catch(error => console.log('Error!: ', error))
   };
 
-  buildChart = (labels, data, label) => {
-    const chartRef = this.chartRef.current.getContext("2d");
-
-    if (typeof this.chart !== "undefined") {
-      this.chart.destroy();
+  const buildChart = (labels, data, label) => {
+    const chartref= chartRef.current.getContext("2d");
+    if (document.getElementById('canvas') == null) {
+      return;
     }
-    this.chart = new Chart(this.chartRef.current.getContext("2d"), {
+    if (typeof window.chart !== "undefined") {
+      window.chart.destroy();
+    }
+    window.chart = new Chart(chartRef.current.getContext("2d"), {
       type: 'line',
       data: {
         labels,
@@ -95,19 +90,15 @@ export default class HistoricalRate extends React.Component {
     });
   };
 
-  render() {
-    const { date }= this.state; 
-
-    return (
-      <React.Fragment>
-        <NavbarHistoricalRate />
-        <div className='container'>
-          <h6 className='text-center my-2'>
-            Latest Update: { date }
-          </h6>
-          <canvas ref={ this.chartRef } />
-        </div>
-      </React.Fragment>   
-    );
-  };
+  return (
+    <React.Fragment>
+      <NavbarHistoricalRate />
+      <div className='container'>
+        <h6 className='text-center my-2'>
+          Latest Update: { date }
+        </h6>
+        <canvas id='canvas' ref={ chartRef } />
+      </div>
+    </React.Fragment>   
+  );
 };
