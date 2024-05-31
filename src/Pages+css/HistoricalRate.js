@@ -64,13 +64,15 @@ export default function HistoricalRate(props) {
   };
 
   const buildChart = (labels, data, label) => {
-    const chartref= chartRef.current.getContext("2d");
+    chartRef.current.getContext("2d");
     if (document.getElementById('canvas') == null) {
       return;
     }
+
     if (typeof window.chart !== "undefined") {
       window.chart.destroy();
     }
+
     window.chart = new Chart(chartRef.current.getContext("2d"), {
       type: 'line',
       data: {
@@ -97,7 +99,7 @@ export default function HistoricalRate(props) {
         <h6 className='text-center my-2'>
           Latest Update: { date }
         </h6>
-        <canvas id='canvas' ref={ chartRef } />
+        <canvas id='canvas' ref={ chartRef }></canvas>
       </div>
     </React.Fragment>   
   );
